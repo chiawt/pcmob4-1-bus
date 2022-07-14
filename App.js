@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'rea
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [arrival, setArrival] = useState("");
   const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=83139";
 
   function loadBusStopData() {
@@ -11,7 +12,9 @@ export default function App() {
       .then((response) => response.json())
       .then((json) => {
         const myBus = json.services.filter((bus) => bus.no == 155)[0];
-        console.log(myBus);
+        console.log(myBus.next.time);
+        setArrival(myBus.next.time)
+        setLoading(false)
       });
   }
 
@@ -23,7 +26,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bus arrival time:</Text>
-      <Text style={styles.arrivalTime}>{loading ? <ActivityIndicator color={"blue"}/> : "loaded"}</Text>
+      <Text style={styles.arrivalTime}>{loading ? <ActivityIndicator color={"blue"}/> : arrival}</Text>
       
       <TouchableOpacity style={styles.button} onPress={() => setLoading(false)}> 
         <Text style={styles.buttonText}>Refresh</Text>
