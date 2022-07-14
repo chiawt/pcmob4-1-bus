@@ -1,12 +1,17 @@
-import React from "react";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.title}>Bus arrival time:</Text>
+      <Text style={styles.arrivalTime}>{loading ? "loading" : "loaded"}</Text>
+      
+      <TouchableOpacity style={styles.button} onPress={() => setLoading(false)}> 
+        <Text style={styles.buttonText}>Refresh</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -17,5 +22,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  title: {
+    fontSize: 50,
+    marginVertical: 20,
+  },
+  arrivalTime: {
+    fontSize: 40,
+  },
+  button: {
+    backgroundColor: 'cyan',
+    padding: 20,
+    marginVertical: 20,
+  },
+  buttonText: {
+    fontSize: 20,
   },
 });
