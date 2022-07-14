@@ -9,7 +9,10 @@ export default function App() {
   function loadBusStopData() {
     fetch(BUSSTOP_URL)
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        const myBus = json.services.filter((bus) => bus.no == 155)[0];
+        console.log(myBus);
+      });
   }
 
   useEffect(() => {
