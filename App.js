@@ -13,8 +13,9 @@ export default function App() {
       .then((response) => response.json())
       .then((json) => {
         const myBus = json.services.filter((bus) => bus.no == 155)[0];
-        console.log(myBus.next.time);
-        setArrival(myBus.next.time);
+        const waittime = Math.ceil(myBus.next.duration_ms/60000);
+        console.log(waittime);
+        setArrival(waittime);
         setLoading(false);
       });
   }
@@ -27,9 +28,11 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+
       <Text style={styles.title}>Bus arrival time:</Text>
-      <Text style={styles.arrivalTime}>{loading ? <ActivityIndicator color={"blue"}/> : arrival}</Text>
-      
+      <Text style={styles.arrivalTime}>Next Bus:</Text>
+      <Text style={styles.arrivalTime}>{loading ? <ActivityIndicator color={"blue"}/> : arrival} min</Text>
+
       <TouchableOpacity style={styles.button} onPress={() => setLoading(false)}> 
         <Text style={styles.buttonText}>Refresh</Text>
       </TouchableOpacity>
@@ -45,11 +48,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 50,
+    fontSize: 40,
     marginVertical: 20,
   },
   arrivalTime: {
-    fontSize: 40,
+    fontSize: 30,
   },
   button: {
     backgroundColor: "cyan",
